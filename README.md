@@ -1,6 +1,6 @@
 <img align="left" width="100px" height="100px" src="/assets/seso-eng-logo.png">
 
-# SESO Coding Challenge: Log Sorting
+# Seso Engineering | Challenge: Log Sorting
 
 <br>
 
