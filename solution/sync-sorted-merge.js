@@ -8,7 +8,7 @@ module.exports = (logSources, printer) => {
   pushInitialEntriesSync(logSources, minHeap);
 
   while (!minHeap.isEmpty()) {
-    // .pop() used on minHeap is a method from "heap-js" and should not be confused with
+    // .pop() used on minHeap is a method from "heap-js" and should not be confused with logSources[index].pop()
     let { entry, index } = minHeap.pop();
     printer.print(entry);
 
