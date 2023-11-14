@@ -1,20 +1,24 @@
 "use strict";
 
-const { Heap } = require("heap-js");
-const processLogEntries = require("./process-log-entries");
+const { initializeHeap, pushInitialEntriesSync } = require("./sort-functions");
 
 module.exports = (logSources, printer) => {
-  const comparator = (a, b) => a.entry.date - b.entry.date;
-  let minHeap = new Heap(comparator);
+  let minHeap = initializeHeap();
 
-  logSources.forEach((source, index) => {
-    let entry = source.pop();
+  pushInitialEntriesSync(logSources, minHeap);
 
-    if (entry) {
-      minHeap.push({ entry, index });
+  while (!minHeap.isEmpty()) {
+    // .pop() used on minHeap is a method from "heap-js" and should not be confused with
+    let { entry, index } = minHeap.pop();
+    printer.print(entry);
+
+    const nextEntry = logSources[index].pop();
+
+    if (nextEntry) {
+      minHeap.push({ entry: nextEntry, index });
     }
-  });
+  }
 
-  processLogEntries(logSources, printer, minHeap);
+  printer.done();
   return console.log("Sync sort complete.");
 };
